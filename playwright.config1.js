@@ -32,7 +32,7 @@ const config = {
       use: {
 
         browserName : 'chromium',
-        headless : false,
+        headless : true,
         screenshot : 'on',
         video: 'retain-on-failure',
         ignoreHttpsErrors:true,
