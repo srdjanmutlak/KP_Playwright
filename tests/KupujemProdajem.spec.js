@@ -27,6 +27,8 @@ test.describe.parallel('KP tests', () => {
     
         // Continue with the rest of the actions
         await kupujemProdajemPage.clickOnFirstAdd();
+        await kupujemProdajemPage.isH1TextVisible(" ");
+
         await kupujemProdajemPage.clickOnAddContactButton();
 
         await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
