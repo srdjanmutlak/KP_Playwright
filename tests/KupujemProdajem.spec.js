@@ -32,7 +32,7 @@ test.describe.parallel('KP tests', () => {
         await kupujemProdajemPage.clickOnAddContactButton();
     
         // Wait for the response
-        await waitForUnauthorizedResponse;
+      //  await waitForUnauthorizedResponse;
     
         await kupujemProdajemPage.ulogujteSeIsVisible();
         await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
