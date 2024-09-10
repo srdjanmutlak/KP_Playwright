@@ -11,7 +11,6 @@ test.describe.parallel('KP tests', () => {
         await kupujemProdajemPage.goToKupujemProdajem();  
         await kupujemProdajemPage.cancelLogin();  
     });
-// first task
     test('Detailed Search test', async () => { 
         await kupujemProdajemPage.clickOnDetailedSearch();
         await kupujemProdajemPage.selectCategoryAndGroup('Odeća | Ženska', 'Bluze'); 
@@ -24,7 +23,6 @@ test.describe.parallel('KP tests', () => {
         const isGreaterThanThousand = await kupujemProdajemPage.isSearchResultCountGreaterThan(1000);
         expect(isGreaterThanThousand).toBe(true);
     });
-// second task
     test('Unauthorized access control check', async () => { 
         // Start waiting for the unauthorized response in the background
         const waitForUnauthorizedResponse = kupujemProdajemPage.waitForAddContactUnauthorizedResponse();
