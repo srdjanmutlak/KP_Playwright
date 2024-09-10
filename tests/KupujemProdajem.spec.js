@@ -31,8 +31,8 @@ test.describe.parallel('KP tests', () => {
         await kupujemProdajemPage.clickOnFirstAdd();
         await kupujemProdajemPage.clickOnAddContactButton();
     
-        // No need to wait the response here
-        // await waitForUnauthorizedResponse;
+        // Wait for the response
+        await waitForUnauthorizedResponse;
     
         await kupujemProdajemPage.ulogujteSeIsVisible();
         await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
