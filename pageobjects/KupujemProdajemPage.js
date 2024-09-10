@@ -104,7 +104,7 @@ async enterTextInCategoryDropdownWithDelay(text) {
 }
 
 async enterTextInGroupDropdownWithDelay(text) {
-    await this.groupDropdownLocator.type(text); 
+    await this.groupDropdownLocator.type(text, { delay: 100 }); 
     await this.page.keyboard.press('Enter');  
 }
 
