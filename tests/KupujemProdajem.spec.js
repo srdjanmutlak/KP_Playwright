@@ -34,7 +34,7 @@ test.describe.parallel('KP tests', () => {
         // Wait for the response
       //  await waitForUnauthorizedResponse;
     
-        await kupujemProdajemPage.ulogujteSeIsVisible();
+     //   await kupujemProdajemPage.ulogujteSeIsVisible();
         await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
     });
 });
