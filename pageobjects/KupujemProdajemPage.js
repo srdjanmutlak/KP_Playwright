@@ -99,6 +99,7 @@ async chooseConditions(conditions) {
 }
 
 async enterTextInCategoryDropdownWithDelay(text) {
+    await this.groupDropdownLocator.hover(); 
     await this.categoryDropdownLocator.type(text, { delay: 100 }); 
     await this.page.keyboard.press('Enter');  
 }
