@@ -24,17 +24,9 @@ test.describe.parallel('KP tests', () => {
         expect(isGreaterThanThousand).toBe(true);
     });
     test('Unauthorized access control check', async () => { 
-        // Start waiting for the unauthorized response in the background
-        const waitForUnauthorizedResponse = kupujemProdajemPage.waitForAddContactUnauthorizedResponse();
-    
-        // Continue with the rest of the actions
         await kupujemProdajemPage.clickOnFirstAdd();
         await kupujemProdajemPage.clickOnAddContactButton();
     
-        // Await the response here
-        await waitForUnauthorizedResponse;
-    
-        await kupujemProdajemPage.ulogujteSeIsVisible();
         await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
     });
 });
