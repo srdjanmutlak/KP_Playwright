@@ -20,8 +20,8 @@ const config = {
     browserName : 'chromium',
     headless : true,
     screenshot : 'on',
-    trace : 'on'
-    
+    trace : 'on'.
+    video: 'on-first-retry',
     
     
   },
