@@ -38,9 +38,9 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-    # Upload videos only if tests retry
+    # Upload videos on failure
     - name: Upload Playwright videos
-      if: steps.test.outcome == 'failure'  # Catch retry for video
+      if: failure()
       uses: actions/upload-artifact@v3
       with:
         name: playwright-videos
