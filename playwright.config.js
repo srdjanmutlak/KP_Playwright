@@ -19,10 +19,10 @@ const config = {
   use: {
     browserName: 'chromium',
     headless: true,
-    screenshot: 'on',  // Snimi screenshot nakon svakog testa
-    trace: 'on',       // Snimi trace za svaku sesiju
-    video: 'on-first-retry',  // Snimi video samo tokom prvog ponovnog pokušaja
-    outputDir: 'test-results/',  // Gde će se čuvati svi izlazni fajlovi (video, screenshot, trace)
+    screenshot: 'on',  
+    trace: 'on',      
+    video: 'retain-on-failure', 
+    outputDir: 'test-results/', 
   },
 };
 
