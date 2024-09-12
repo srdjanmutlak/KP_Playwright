@@ -20,7 +20,7 @@ const config = {
     browserName : 'chromium',
     headless : true,
     screenshot : 'on',
-    trace : 'on',//off,on
+    trace : 'on'
     
     
     
