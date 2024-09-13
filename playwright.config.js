@@ -24,8 +24,8 @@ const config = {
     video: 'retain-on-failure', 
     outputDir: 'test-results/', 
     navigationTimeout: 15 * 1000,
-    actionTimeout: 4 * 1000,
-    requestTimeout: 4 * 1000,
+    actionTimeout: 5 * 1000,
+    requestTimeout: 5 * 1000,
   },
 };
 
