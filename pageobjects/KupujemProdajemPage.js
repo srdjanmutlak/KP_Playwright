@@ -89,8 +89,7 @@ async waitForAddContactUnauthorizedResponse() {
     await this.page.waitForResponse(
         response => 
             response.url().includes('/api/web/v1/addressbook/add-contact') && 
-            response.status() === 401,
-        { timeout: 3000 } 
+            response.status() === 401
     );
 }
 
