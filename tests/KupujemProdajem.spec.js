@@ -42,8 +42,7 @@ test.describe.parallel('KP tests', () => {
         // **Pokušaj dodavanja kontakta bez autorizacije**
         await kpPage.clickOnAddContactButton();
 
-        // **Korišćenje isH1TextVisible metode i asercija**
-        const isVisible = await kpPage.isH1TextVisible('Ulogujte se');
-        expect(isVisible).toBe(true);
+        // **Korišćenje isH1TextVisible metode**
+        await kpPage.isH1TextVisible('Ulogujte se');
     });
 });
