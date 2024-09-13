@@ -1,32 +1,49 @@
 const { test, expect } = require('@playwright/test');
-const { POManager } = require('../pageobjects/POManager');
+const { KupujemProdajemPage } = require('../pageobjects/KupujemProdajemPage');
 
 test.describe.parallel('KP tests', () => {
-    let kupujemProdajemPage;
+    let kpPage;
 
     test.beforeEach(async ({ page }) => {
-        const poManager = new POManager(page);
-        kupujemProdajemPage = poManager.getKupujemProdajem();
+        kpPage = new KupujemProdajemPage(page);
 
-        await kupujemProdajemPage.goToKupujemProdajem();  
-        await kupujemProdajemPage.cancelLogin();  
+        // Navigacija do početne stranice i zatvaranje login prozora
+        await kpPage.navigateTo('https://www.kupujemprodajem.com/');
+        await kpPage.cancelLogin();  
     });
+
     test('Detailed Search test', async () => { 
-        await kupujemProdajemPage.clickOnDetailedSearch();
-        await kupujemProdajemPage.selectCategoryAndGroup('Odeća | Ženska', 'Bluze'); 
-        await kupujemProdajemPage.enterTextInPriceFrom('100');
-        await kupujemProdajemPage.clickOnDinRButton();
-        await kupujemProdajemPage.clickOnOnlyWithPrice();
-        await kupujemProdajemPage.chooseConditions(["Novo", "Nekorišćeno"]);
-        await kupujemProdajemPage.clickOnApplyFiltersButton();
+        // **Navigacija do detaljne pretrage**
+        await kpPage.click(kpPage.locators.detailedSearchButton);
 
-        const isGreaterThanThousand = await kupujemProdajemPage.isSearchResultCountGreaterThan(1000);
-        expect(isGreaterThanThousand).toBe(true);
+        // **Izbor kategorije i grupe**
+        await kpPage.selectCategoryAndGroup('Odeća | Ženska', 'Bluze'); 
+
+        // **Postavljanje cene i valute**
+        await kpPage.fillInput(kpPage.locators.priceFromInput, '100');
+        await kpPage.click(kpPage.locators.dinRadioButton);
+
+        // **Primena dodatnih filtera**
+        await kpPage.click(kpPage.locators.onlyWithPriceCheckbox);
+        await kpPage.selectConditions(['Novo', 'Nekorišćeno']);
+
+        // **Primena filtera**
+        await kpPage.click(kpPage.locators.applyFiltersButton);
+
+        // **Dobijanje i asertacija broja rezultata pretrage**
+        const resultCount = await kpPage.getSearchResultCount();
+        expect(resultCount).toBeGreaterThan(1000);
     });
+
     test('Unauthorized access control check', async () => { 
-        await kupujemProdajemPage.clickOnFirstAdd();
-        await kupujemProdajemPage.clickOnAddContactButton();
-    
-        await kupujemProdajemPage.isH1TextVisible("Ulogujte se");
+        // **Otvaranje prvog oglasa**
+        await kpPage.clickOnFirstAd();
+
+        // **Pokušaj dodavanja kontakta bez autorizacije**
+        await kpPage.clickOnAddContactButton();
+
+        // **Korišćenje isH1TextVisible metode i asercija**
+        const isVisible = await kpPage.isH1TextVisible('Ulogujte se');
+        expect(isVisible).toBe(true);
     });
 });
