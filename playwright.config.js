@@ -2,11 +2,12 @@
 const { devices } = require('@playwright/test');
 
 const config = {
+  timeout: 3000,
   testDir: './tests',
   retries: 3,
   
   /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
+//  timeout: 100 * 1000,
   expect: {
     timeout: 5000
   },
