@@ -1,159 +1,100 @@
-const {test, expect} = require('@playwright/test');
-class KupujemProdajemPage
-{
-constructor(page)
-{
-    this.page = page;
-    this.cancelLoginButton = page.locator("button[class='Button_base__G3HTK Button_big__vkHxv Modal_closeIcon__CJuTW']")
-    this.detailedSearchButton = page.locator("//button[@aria-label='Pretražite detaljno ']");
-    this.categoryDropdownLocator = page.locator("#react-select-categoryId-input");
-    this.groupDropdownLocator = page.locator("#react-select-groupId-input");
-    this.priceFromLocator = page.locator("#priceFrom");
-    this.dinRadioButtonLocator = page.locator("//label[contains(.,'din')]");
-    this.onlyWithPriceChBx = page.locator("//span[contains(text(), 'Samo sa cenom')]");
-    this.conditionInputLocator = page.locator("#react-select-condition-input");
-    this.firstAdLocator = page.locator("(//a[@class='Link_link__2iGTE CategoryBox_listItemName__q8gZH'])[2]");
-    this.addContactButtonLocator = page.locator("//button[.='Dodaj u adresar']")
-    this.addNextAddLocator = page.locator("button[aria-label='Sledeći oglas']")
-    this.h1LoginLocator = page.locator("//h1[.='Ulogujte se']")
+const { expect } = require('@playwright/test');
 
-    this.applyFiltersButtonLocator = page.locator("//button[@aria-label='Primeni filtere']");
-    this.searchResultCountLocator = page.locator("//a[contains(text(),'Bluze')]/following-sibling::span");
-}
+class KupujemProdajemPage {
+    constructor(page) {
+        this.page = page;
 
-async goToKupujemProdajem()
-{
-    await this.page.goto("https://www.kupujemprodajem.com/");
-}
+        // **Locators**
+        this.locators = {
+            cancelLoginButton: page.locator("button[class='Button_base__G3HTK Button_big__vkHxv Modal_closeIcon__CJuTW']"),
+            detailedSearchButton: page.locator("//button[@aria-label='Pretražite detaljno ']"),
+            categoryDropdown: page.locator("#react-select-categoryId-input"),
+            groupDropdown: page.locator("#react-select-groupId-input"),
+            priceFromInput: page.locator("#priceFrom"),
+            dinRadioButton: page.locator("//label[contains(.,'din')]"),
+            onlyWithPriceCheckbox: page.locator("//span[contains(text(), 'Samo sa cenom')]"),
+            conditionInput: page.locator("#react-select-condition-input"),
+            firstAdLink: page.locator("(//a[@class='Link_link__2iGTE CategoryBox_listItemName__q8gZH'])[2]"),
+            addContactButton: page.locator("//button[.='Dodaj u adresar']"),
+            nextAdButton: page.locator("button[aria-label='Sledeći oglas']"),
+            loginHeader: page.locator("//h1[.='Ulogujte se']"),
+            applyFiltersButton: page.locator("//button[@aria-label='Primeni filtere']"),
+            searchResultCount: page.locator("//a[contains(text(),'Bluze')]/following-sibling::span")
+        };
+    }
 
-async goToKPFixedSearch()
-{
-    await this.page.goto("https://www.kupujemprodajem.com/odeca-zenska/bluze/pretraga?categoryId=743&groupId=1992");
-}
+    // **Navigation**
+    async navigateTo(url) {
+        await this.page.goto(url);
+    }
 
-async cancelLogin()
-{
-    await this.cancelLoginButton.click();
-}
+    // **Actions**
+    async click(locator) {
+        await locator.click();
+    }
 
-async clickOnDetailedSearch()
-{
-    await this.detailedSearchButton.click();
-}
+    async fillInput(locator, text) {
+        await locator.fill(text);
+    }
 
-async clickOnDinRButton()
-{
-    await this.dinRadioButtonLocator.click();
-}
-
-async clickOnCategory()
-{
-    await this.categoryDropdownLocator.click();
-}
-
-async clickOnOnlyWithPrice()
-{
-    await this.onlyWithPriceChBx.click();
-}
-
-async clickOnFirstAdd()
-{
-    await this.firstAdLocator.click();
-}
-
-async clickOnNextAdButton()
-{
-    await this.addNextAddLocator.click();
-}
-
-async clickOnAddContactButton()
-{
-    await this.addContactButtonLocator.click();
-}
-
-async ulogujteSeIsVisible()
-{
-    const h1 = await this.h1LoginLocator.textContent();
-    expect(h1.includes('Ulogujte se')).toBeTruthy();
-}
-
-async isAddContactButtonVisible()
-{
-    const addContactText = await this.addContactButtonLocator.textContent();
-    console.log('Text content of Add Contact button:', addContactText);
-    
-    expect(addContactText.includes('Dodaj u adresar')).toBeTruthy();
-}
-
-async waitForAddContactUnauthorizedResponse() {
-    await this.page.waitForResponse(
-        response => 
-            response.url().includes('/api/web/v1/addressbook/add-contact') && 
-            response.status() === 401
-    );
-}
-
-async isH1TextVisible(text) {
-    await this.waitForAddContactUnauthorizedResponse();
-
-    const element = await this.page.locator(`//h1[contains(.,'${text}')]`);
-    const content = await element.textContent();
-
-    expect(content).toContain(text);
-}
-
-async chooseConditions(conditions) {
-    for (const condition of conditions) {
-        await this.conditionInputLocator.type(condition);
+    async typeAndEnter(locator, text, options = {}) {
+        await locator.type(text, options);
         await this.page.keyboard.press('Enter');
+    }
+
+    async selectOption(locator, text, options = {}) {
+        await this.typeAndEnter(locator, text, options);
+    }
+
+    async selectCategoryAndGroup(categoryText, groupText) {
+        await this.selectOption(this.locators.categoryDropdown, categoryText);
+        await this.selectOption(this.locators.groupDropdown, groupText);
+    }
+
+    async selectConditions(conditionsArray) {
+        for (const condition of conditionsArray) {
+            await this.selectOption(this.locators.conditionInput, condition);
+        }
+    }
+
+    async clickOnFirstAd() {
+        await this.click(this.locators.firstAdLink);
+    }
+
+    async clickOnAddContactButton() {
+        await this.click(this.locators.addContactButton);
+    }
+
+    async cancelLogin() {
+        await this.click(this.locators.cancelLoginButton);
+    }
+
+    // **Waits**
+    async waitForResponse(urlPart, statusCode = 200) {
+        await this.page.waitForResponse(response =>
+            response.url().includes(urlPart) && response.status() === statusCode
+        );
+    }
+
+    // **Utility Methods**
+    async getSearchResultCount() {
+        await this.waitForResponse('/api/web/v1/search');
+        const text = await this.locators.searchResultCount.textContent();
+        const count = parseInt(text.replace('.', '').replace(' rezultata', ''));
+        return count;
+    }
+
+    async isSearchResultCountGreaterThan(threshold) {
+        const count = await this.getSearchResultCount();
+        return count > threshold;
+    }
+
+    async isH1TextVisible(text) {
+        await this.waitForResponse('/api/web/v1/addressbook/add-contact', 401);
+        const element = this.page.locator(`//h1[contains(.,'${text}')]`);
+        const content = await element.textContent();
+        expect(content).toContain(text);
     }
 }
 
-async enterTextInCategoryDropdownWithDelay(text) {
-    await this.categoryDropdownLocator.type(text); 
-    await this.page.keyboard.press('Enter');  
-}
-
-async enterTextInGroupDropdownWithDelay(text) {
-    await this.groupDropdownLocator.type(text, { delay: 100 }); 
-    await this.page.keyboard.press('Enter');  
-}
-
-async enterTextInPriceFrom(text) {
-    await this.priceFromLocator.type(text); 
-    await this.page.keyboard.press('Enter');  
-}
-
-async selectCategoryAndGroup(categoryText, groupText) {
- //   await this.clickOnCategory();
-    await this.enterTextInCategoryDropdownWithDelay(categoryText);
-    await this.enterTextInGroupDropdownWithDelay(groupText);
-}
-
-async clickOnApplyFiltersButton()
-{
-    await this.applyFiltersButtonLocator.click();
-}
-
-async waitForSearchResponse() {
-    await this.page.waitForResponse(response => 
-        response.url().includes('/api/web/v1/search') && 
-        response.status() === 200
-    );
-}
-
-async getSearchResultCount() {
-
-    await this.waitForSearchResponse();
-    const text = await this.searchResultCountLocator.textContent();  // Izvlačimo tekst iz locatora
-    const count = parseInt(text.replace('.', '').replace(' rezultata', ''));  // Uklanjamo tačku i reč "rezultata" da bismo dobili broj
-    return count;  // Vraćamo broj rezultata
-}
-
-async isSearchResultCountGreaterThan(threshold) {
-    const count = await this.getSearchResultCount();
-    return count > threshold;  // Proveravamo da li je broj rezultata veći od zadatog praga
-}
-
-}
-module.exports = {KupujemProdajemPage};
+module.exports = { KupujemProdajemPage };
