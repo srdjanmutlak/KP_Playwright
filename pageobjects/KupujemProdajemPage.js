@@ -85,9 +85,19 @@ async isAddContactButtonVisible()
     expect(addContactText.includes('Dodaj u adresar')).toBeTruthy();
 }
 
+async waitForAddContactUnauthorizedResponse() {
+    await this.page.waitForResponse(response => 
+        response.url().includes('/api/web/v1/addressbook/add-contact') && 
+        response.status() === 401
+    );
+}
+
 async isH1TextVisible(text) {
+    await this.waitForAddContactUnauthorizedResponse();
+
     const element = await this.page.locator(`//h1[contains(.,'${text}')]`);
     const content = await element.textContent();
+
     expect(content).toContain(text);
 }
 
@@ -99,7 +109,7 @@ async chooseConditions(conditions) {
 }
 
 async enterTextInCategoryDropdownWithDelay(text) {
-    await this.categoryDropdownLocator.type(text, { delay: 100 }); 
+    await this.categoryDropdownLocator.type(text); 
     await this.page.keyboard.press('Enter');  
 }
 
@@ -128,13 +138,6 @@ async waitForSearchResponse() {
     await this.page.waitForResponse(response => 
         response.url().includes('/api/web/v1/search') && 
         response.status() === 200
-    );
-}
-
-async waitForAddContactUnauthorizedResponse() {
-    await this.page.waitForResponse(response => 
-        response.url().includes('/api/web/v1/addressbook/add-contact') && 
-        response.status() === 401
     );
 }
 
