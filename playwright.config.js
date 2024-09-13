@@ -24,6 +24,7 @@ const config = {
     trace: 'on',      
     video: 'retain-on-failure', 
     outputDir: 'test-results/', 
+    navigationTimeout: 15 * 1000,
   },
 };
 
