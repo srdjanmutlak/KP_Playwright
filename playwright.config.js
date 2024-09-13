@@ -2,7 +2,6 @@
 const { devices } = require('@playwright/test');
 
 const config = {
-  timeout: 3000,
   testDir: './tests',
   retries: 3,
   
@@ -25,6 +24,8 @@ const config = {
     video: 'retain-on-failure', 
     outputDir: 'test-results/', 
     navigationTimeout: 15 * 1000,
+    actionTimeout: 4 * 1000,
+    requestTimeout: 4 * 1000,
   },
 };
 
