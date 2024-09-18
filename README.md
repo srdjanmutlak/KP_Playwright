@@ -1,4 +1,3 @@
-Automatski test
 U okviru ovog zadatka je potrebno pokazati svoje sposobnosti u pisanju automatskih testova.
 Treba koristiti Java/Selenium (Playwright) za pisanje i puštanje automatskih testova. Sve što je potrebno da
 se desi da bi test ispravno radio treba srediti, tako da možemo “samo” da pustimo testove.
