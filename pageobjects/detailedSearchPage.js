@@ -8,7 +8,6 @@ class DetailedSearchPage extends BasePage {
             categoryDropdown: page.locator("#react-select-categoryId-input"),
             groupDropdown: page.locator("#react-select-groupId-input"),
             priceFromInput: page.locator("#priceFrom"),
-            dinRadioButton: page.locator("//label[contains(.,'din')]"),
             onlyWithPriceCheckbox: page.locator("//span[contains(text(), 'Samo sa cenom')]"),
             conditionInput: page.locator("#react-select-condition-input"),
             applyFiltersButton: page.locator("//button[@aria-label='Primeni filtere']"),
@@ -25,8 +24,8 @@ class DetailedSearchPage extends BasePage {
         await this.fillInput(this.locators.priceFromInput, price);
     }
 
-    async selectCurrency() {
-        await this.click(this.locators.dinRadioButton);
+    async selectCurrency(currency) {
+        await this.page.getByLabel(currency).check();
     }
 
     async checkOnlyWithPrice() {
