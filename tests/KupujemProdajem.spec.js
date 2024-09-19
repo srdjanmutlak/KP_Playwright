@@ -26,7 +26,7 @@ test.describe.parallel('KP tests with new pages in POManager', () => {
         await homePage.goToDetailedSearch();
         await detailedSearchPage.selectCategoryAndGroup('Odeća | Ženska', 'Bluze', 50);
         await detailedSearchPage.setPriceFrom('100');
-        await detailedSearchPage.selectCurrency();
+        await detailedSearchPage.selectCurrency('rsd');
         await detailedSearchPage.checkOnlyWithPrice();
         await detailedSearchPage.selectConditions(['Novo', 'Nekorišćeno']);
         await detailedSearchPage.applyFilters();
