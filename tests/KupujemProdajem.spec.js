@@ -11,14 +11,12 @@ test.describe.parallel('KP tests with new pages in POManager', () => {
     test.beforeEach(async ({ page }) => {
         poManager = new POManager(page);
 
-        // Dohvatanje novih stranica kroz POManager
         homePage = poManager.getHomePage();
         detailedSearchPage = poManager.getDetailedSearchPage();
         adPage = poManager.getAdPage();
         loginPage = poManager.getLoginPage();
 
-        // Navigacija do početne stranice i zatvaranje login prozora
-        await homePage.navigateTo('https://www.kupujemprodajem.com/');
+        await homePage.navigateTo();
         await loginPage.cancelLogin();
     });
 
@@ -41,5 +39,5 @@ test.describe.parallel('KP tests with new pages in POManager', () => {
         await adPage.clickAddContact();
 
         await loginPage.isHeaderTextVisibleAfter401('Ulogujte se');
-        });
+    });
 });
