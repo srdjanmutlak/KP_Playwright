@@ -16,5 +16,5 @@ Poslednji uspešni test report može se naći u projektu, u sekciji Actions.
 
 Tehnologije:
 
-JavaScript (Playwright) za UI i API testove
+JavaScript (Playwright) za UI i API testove,
 GitHub Actions za CI/CD automatizaciju
