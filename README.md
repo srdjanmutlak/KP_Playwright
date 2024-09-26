@@ -1,14 +1,13 @@
-U okviru ovog zadatka je potrebno pokazati svoje sposobnosti u pisanju automatskih testova.
-Treba koristiti Java/Selenium (Playwright) za pisanje i puštanje automatskih testova. Sve što je potrebno da
-se desi da bi test ispravno radio treba srediti, tako da možemo “samo” da pustimo testove.
-Scenarija koja treba pokriti testovima:
-1. Pretraga po sledećim kriterijumima (kategorija “Odeća | Ženska”, grupa “Bluze”, cena od
-100 din, samo sa cenom, stanje “Novo” i “Kao novo (ne korišćeno)”) treba ustanoviti da
-imamo više od 1000 rezultata za ovakvu pretragu.
-2. Iz otvorenog oglasa kada probamo da dodamo u Adresar da nam se traži forma za login.
+Automatizovani Testovi
+Ovaj zadatak demonstrira veštine u pisanju automatskih testova koristeći JavaScript/Playwright. Iako je prvobitno korišćen Selenium, zbog specifičnih potreba projekta implementacija je prebačena u Playwright kako bi se iskoristile njegove prednosti za određene scenarije. Pored UI testova, implementirani su i API testovi pisani u Playwrightu, koji pokrivaju iste funkcionalnosti i omogućavaju brže izvršavanje putem API-ja.
 
-Zadatak po tačkama:
-● Za gore navedena dva scenarija treba kreirati automatske testove
-● Kreiranje automatskih testova i pokretanje
-● Dostaviti na uvid: kod automatskog testa, uputstvo za njegovo startovanje i korišćenje,
-sliku rezultata koja je dobijena prilikom puštanja automatskih testova.
+Scenariji za pokrivanje:
+Pretraga: Kategorija "Odeća | Ženska", grupa "Bluze", cena od 100 din, samo sa cenom, stanje "Novo" i "Kao novo (ne korišćeno)" treba da vrati više od 1000 rezultata.
+Adresar: Pri dodavanju oglasa u Adresar, mora se pojaviti forma za login.
+Uputstvo za pokretanje:
+Testovi se automatski pokreću na svakom push ili pull request na grane main i master putem GitHub Actions.
+Poslednji uspešni test report može se naći u projektu, u sekciji Actions.
+
+Tehnologije:
+JavaScript (Playwright) za UI i API testove
+GitHub Actions za CI/CD automatizaciju
