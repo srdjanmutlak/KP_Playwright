@@ -12,6 +12,7 @@ Pri dodavanju oglasa u Adresar, mora se pojaviti forma za login.
 
 Uputstvo za pokretanje:
 Testovi se automatski pokreću na svakom push ili pull request na grane main i master putem GitHub Actions.
+
 Poslednji uspešni test report može se naći u projektu, u sekciji Actions.
 
 Tehnologije:
