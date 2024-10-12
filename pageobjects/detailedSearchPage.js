@@ -7,6 +7,7 @@ class DetailedSearchPage extends BasePage {
         this.locators = {
             categoryDropdown: page.locator("#react-select-categoryId-input"),
             groupDropdown: page.locator("#react-select-groupId-input"),
+            groupDropdownOptions: page.locator('div[role="option"][aria-selected="false"]'),
             priceFromInput: page.locator("#priceFrom"),
           //  dinRadioButton: page.locator("//label[contains(.,'din')]"),
             onlyWithPriceCheckbox: page.locator("//span[contains(text(), 'Samo sa cenom')]"),
@@ -29,9 +30,18 @@ class DetailedSearchPage extends BasePage {
         // Prvo biramo kategoriju
         await this.selectDropdownOption(categoryText);
     
-        // Zatim biramo grupu
+        // Čekamo da se subkategorije automatski otvore (ako je automatsko otvaranje)
+        const isGroupDropdownVisible = await this.locators.groupDropdownOptions.isVisible();
+        
+        // Ako subkategorija nije automatski otvorena, kliknemo na dropdown da je otvorimo
+        if (!isGroupDropdownVisible) {
+            await this.click(this.locators.groupDropdown);
+        }
+    
+        // Biramo grupu
         await this.selectDropdownOption(groupText);
     }
+    
     
     
     async setPriceFrom(price) {
