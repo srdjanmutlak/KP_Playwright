@@ -17,6 +17,17 @@ class AdPage extends BasePage {
     }
 
     async handleFirstAd() {
+
+        const isNextAddButtonVisible = await Promise.race([
+            this.locators.nextAdButton.isVisible(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Dropdown nije otvoren na vreme')), 2000))
+        ]);
+    
+        // Ako dropdown nije otvoren, ručno ga otvaramo (ovo radi samo jednom i ako ne uspe test se prekida)
+        if (!isNextAddButtonVisible) {
+            await this.page.reload();  // Reload stranice
+        }
+
         await this.retryClick(this.locators.addContactButton, this.locators.nextAdButton);
     }
 
