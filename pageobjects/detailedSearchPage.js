@@ -7,7 +7,7 @@ class DetailedSearchPage extends BasePage {
         this.locators = {
             categoryDropdown: page.locator("#react-select-categoryId-input"),
             groupDropdown: page.locator("#react-select-groupId-input"),
-            groupDropdownOptions: page.locator('div[role="option"][aria-selected="false"]'),
+            groupDropdownOption: page.locator('div[role="option"][aria-selected="false"] div:has-text("Bluze")').first(),
             priceFromInput: page.locator("#priceFrom"),
           //  dinRadioButton: page.locator("//label[contains(.,'din')]"),
             onlyWithPriceCheckbox: page.locator("//span[contains(text(), 'Samo sa cenom')]"),
@@ -29,11 +29,14 @@ class DetailedSearchPage extends BasePage {
     async selectCategoryAndGroup(categoryText, groupText) {
         // Prvo biramo kategoriju
         await this.selectDropdownOption(categoryText);
+
+        // Trkamo čekanje dropdowna sa timeout-om od 2 sekunde
+        const isGroupDropdownVisible = await Promise.race([
+            this.locators.groupDropdownOption.isVisible(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Dropdown nije otvoren na vreme')), 2000))
+        ]);
     
-        // Čekamo da se subkategorije automatski otvore (ako je automatsko otvaranje)
-        const isGroupDropdownVisible = await this.locators.groupDropdownOptions.isVisible();
-        
-        // Ako subkategorija nije automatski otvorena, kliknemo na dropdown da je otvorimo
+        // Ako dropdown nije otvoren, ručno ga otvaramo (ovo radi samo jednom i ako ne uspe test se prekida)
         if (!isGroupDropdownVisible) {
             await this.click(this.locators.groupDropdown);
         }
@@ -41,9 +44,7 @@ class DetailedSearchPage extends BasePage {
         // Biramo grupu
         await this.selectDropdownOption(groupText);
     }
-    
-    
-    
+        
     async setPriceFrom(price) {
         await this.fillInput(this.locators.priceFromInput, price);
     }
