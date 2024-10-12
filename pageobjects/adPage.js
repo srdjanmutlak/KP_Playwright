@@ -19,8 +19,8 @@ class AdPage extends BasePage {
     async handleFirstAd() {
 
         const isNextAddButtonVisible = await Promise.race([
-            this.locators.nextAdButton.isVisible(),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Dropdown nije otvoren na vreme')), 2000))
+            this.page.waitForSelector("button[aria-label='Sledeći oglas']", { state: 'visible', timeout: 5000 }),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Dropdown nije otvoren na vreme')), 4000))
         ]);
     
         // Ako dropdown nije otvoren, ručno ga otvaramo (ovo radi samo jednom i ako ne uspe test se prekida)
