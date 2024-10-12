@@ -54,6 +54,7 @@ test.describe.parallel('KP tests with new pages in POManager', () => {
         const apiResultCount = await basePage.getListingCountFromMeta(response);
     
         // **Poređenje rezultata** - Upoređivanje broja rezultata dobijenih iz UI i API-ja
+        expect(searchUrl).toContain(new URL(page.url()).search);
         expect(uiResultCount).toEqual(apiResultCount);
         expect(uiResultCount).toBeGreaterThan(1000);
     });         
