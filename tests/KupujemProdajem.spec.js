@@ -8,9 +8,7 @@ test.describe.parallel('KP tests with new pages in POManager', () => {
     let adPage;
     let loginPage;
     let basePage;
-
-    let uiResultCount;
-
+    
     test.beforeEach(async ({ page }) => {
         poManager = new POManager(page);
 
